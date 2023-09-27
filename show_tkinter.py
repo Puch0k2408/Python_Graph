@@ -1,5 +1,5 @@
 import tkinter as tk
-from Calc_f3 import calc
+from Calc_f2 import calc
 import tkinter.messagebox as msgbox
 import math
 
