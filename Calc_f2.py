@@ -2,7 +2,9 @@ from math import sin, cos, tan, acos, asin, atan, log, pi, fabs
 
 ''' Калькулирование '''
 
-# Форматирование строки в список токенов
+
+# todo: Данный код определяет функцию formatExpression, которая принимает на вход строку expression
+#  и возвращает список, содержащий элементы этой строки.
 def formatExpression(expression):
     tmp = ''
     a = []
@@ -28,7 +30,8 @@ base = 0
 currentNode = []
 arr = []
 
-# Используется для получения каждого операнда в выражении для последующих вычислений
+
+# todo: Используется для получения каждого операнда в выражении для последующих вычислений
 def getNode():
     if currentNode:
         return currentNode.pop(0)
@@ -88,6 +91,7 @@ def getNode():
             x += '-1'
         return float(x)
 
+
 # Считает корень
 def calculate_root(x, number):
     if x >= 0:
@@ -99,30 +103,18 @@ def calculate_root(x, number):
     else:
         return None
 
+
 # Считает логарифм
 def logarithm(base):
     x = getNode()
     return log(x, base)
 
-# Используется для сохранения операции, которая была получена из функции getOperation(), чтобы она могла быть использована позже в вычислениях
-def setNode(node):
-    currentNode.append(node)
 
-# Получает следующую операцию в выражении
-def getOperation():
-    if currentNode:
-        return currentNode.pop(0)
-    else:
-        if arr:
-            return arr.pop(0)
-        else:
-            return None
-
-# Выполняет сложение и вычитание в выражении и просчитывет степень
+# Выполняет сложение, вычитание и возведение в степень в выражении
 def calcPlusMinus():
     left = calcDivMult()
 
-    if left is None:  # Изменено условие проверки
+    if left is None:
         return 0
 
     operation = getOperation()
@@ -136,7 +128,7 @@ def calcPlusMinus():
             elif left < 0 and right % 2 == 0:
                 left = left ** right
             elif (left < 0) and left != -1:
-                left = -((-left) ** (right))
+                left = -((-left) ** right)
             else:
                 return None
 
@@ -191,15 +183,28 @@ def calcdegree():
         operation = getOperation()
 
 
-# Функция принимает выражение в качестве параметра expression,
-# очищает глобальные переменные arr и currentNode,
-# форматирует выражение с помощью функции formatExpression() и затем возвращает результат вычисления, вызывая функцию calcPlusMinus()
+# todo: Используется для сохранения операции, которая была получена из функции getNode(), чтобы она могла быть
+#  использована позже в вычислениях
+def setNode(node):
+    currentNode.append(node)
+
+
+# todo: Получает следующую операцию в выражении
+def getOperation():
+    if currentNode:
+        return currentNode.pop(0)
+    else:
+        if arr:
+            return arr.pop(0)
+        else:
+            return None
+
+
+# todo: Функция принимает выражение в качестве параметра expression, форматирует выражение с помощью функции,
+#  formatExpression() и затем возвращает результат вычисления, вызывая функцию calcPlusMinus()*
 def calc(expression):
     global arr
     global currentNode
     currentNode.clear()
     arr = formatExpression(expression)
     return calcPlusMinus()
-
-
-
