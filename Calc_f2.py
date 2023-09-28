@@ -2,6 +2,7 @@ from math import sin, cos, tan, acos, asin, atan, log, pi, fabs
 
 ''' Калькулирование '''
 
+#Форматирование строки в список токенов
 def formatExpression(expression):
     tmp = ''
     a = []
@@ -27,7 +28,7 @@ base = 0
 currentNode = []
 arr = []
 
-
+#Используется для получения каждого операнда в выражении для последующих вычислений
 def getNode():
     if currentNode:
         return currentNode.pop(0)
@@ -87,6 +88,7 @@ def getNode():
             x += '-1'
         return float(x)
 
+#Считает корень
 def calculate_root(x, number):
     if x >= 0:
         return x ** (1 / number)
@@ -97,15 +99,16 @@ def calculate_root(x, number):
     else:
         return None
 
+#Считает логарифм
 def logarithm(base):
     x = getNode()
     return log(x, base)
 
-
+#используется для сохранения операции, которая была получена из функции getOperation(), чтобы она могла быть использована позже в вычислениях.
 def setNode(node):
     currentNode.append(node)
 
-
+#Получает следующую операцию в выражении.
 def getOperation():
     if currentNode:
         return currentNode.pop(0)
@@ -115,7 +118,7 @@ def getOperation():
         else:
             return None
 
-
+#Выполняет сложение и вычитание в выражении и просчитывет степень.
 def calcPlusMinus():
     left = calcDivMult()
 
@@ -149,6 +152,7 @@ def calcPlusMinus():
         operation = getOperation()
 
 
+#Выполнение выполняет умножение и деление в выражении
 def calcDivMult():
     left = getNode()
     if not left:
@@ -169,6 +173,7 @@ def calcDivMult():
         operation = getOperation()
 
 
+#Вычисление степени в выражении
 def calcdegree():
     left = getNode()
     if not left:
@@ -185,6 +190,10 @@ def calcdegree():
 
         operation = getOperation()
 
+
+#Функция принимает выражение в качестве параметра expression,
+# очищает глобальные переменные arr и currentNode,
+# форматирует выражение с помощью функции formatExpression() и затем возвращает результат вычисления, вызывая функцию calcPlusMinus()
 def calc(expression):
     global arr
     global currentNode
@@ -192,8 +201,5 @@ def calc(expression):
     arr = formatExpression(expression)
     return calcPlusMinus()
 
-print(calc('(-3)^(3)'))
-
-print(calc('sqrt(25, 2)'))
 
 
