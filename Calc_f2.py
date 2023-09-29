@@ -94,14 +94,17 @@ def getNode():
 
 # Считает корень
 def calculate_root(x, number):
-    if x >= 0:
-        return x ** (1 / number)
-    elif number & 1:
-        return -(-x) ** (1 / number)
-    elif x == 1:
-        return x
-    else:
+    if number % 2 == 0 and x < 0:
         return None
+    else:
+        if x >= 0:
+            return x ** (1 / number)
+        elif number & 1:
+            return -(-x) ** (1 / number)
+        elif x == 1:
+            return x
+        else:
+            return None
 
 
 # Считает логарифм
@@ -122,15 +125,18 @@ def calcPlusMinus():
         if operation == '^':
             right = calcdegree()
             if left >= 0:
-                left **= right
-            elif left == -1 and right % 2 == 0:
-                left = left * (-1)
-            elif left < 0 and right % 2 == 0:
                 left = left ** right
-            elif (left < 0) and left != -1:
-                left = -((-left) ** right)
-            else:
-                return None
+            if left < 0:
+                if left == (-1) and right % 2 == 0:
+                    left = left * (-1)
+                elif left == (-1) and right % 2 != 0:
+                    left = left
+                elif right % 2 == 0:
+                    left = ((-left) ** right)
+                elif right % 2 != 0:
+                    left = -((-left) ** right)
+                else:
+                    return None
 
         if operation == '-':
             right = calcDivMult()
